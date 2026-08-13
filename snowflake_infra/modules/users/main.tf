@@ -1,6 +1,7 @@
 resource "snowflake_user" "user" {
   name         = var.user_name
   display_name = var.user_name
+  login_name   = var.login_name
 
   password = var.password
 
