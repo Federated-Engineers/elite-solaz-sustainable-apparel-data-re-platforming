@@ -1,6 +1,6 @@
 resource "snowflake_grant_privileges_to_account_role" "engineer_gold_tables_existing" {
   account_role_name = snowflake_account_role.engineer.name
-  privileges        = ["SELECT", "INSERT", "UPDATE", "DELETE", "TRUNCATE"]
+  privileges        = ["SELECT", "INSERT", "UPDATE"]
 
   on_schema_object {
     all {
@@ -12,7 +12,7 @@ resource "snowflake_grant_privileges_to_account_role" "engineer_gold_tables_exis
 
 resource "snowflake_grant_privileges_to_account_role" "engineer_gold_tables_future" {
   account_role_name = snowflake_account_role.engineer.name
-  privileges        = ["SELECT", "INSERT", "UPDATE", "DELETE", "TRUNCATE"]
+  privileges        = ["SELECT", "INSERT", "UPDATE"]
 
   on_schema_object {
     future {
@@ -48,7 +48,7 @@ resource "snowflake_grant_privileges_to_account_role" "engineer_gold_views_futur
 
 resource "snowflake_grant_privileges_to_account_role" "engineer_silver_tables_existing" {
   account_role_name = snowflake_account_role.engineer.name
-  privileges        = ["SELECT", "INSERT", "UPDATE", "DELETE", "TRUNCATE"]
+  privileges        = ["SELECT", "INSERT", "UPDATE"]
 
   on_schema_object {
     all {
@@ -60,7 +60,7 @@ resource "snowflake_grant_privileges_to_account_role" "engineer_silver_tables_ex
 
 resource "snowflake_grant_privileges_to_account_role" "engineer_silver_tables_future" {
   account_role_name = snowflake_account_role.engineer.name
-  privileges        = ["SELECT", "INSERT", "UPDATE", "DELETE", "TRUNCATE"]
+  privileges        = ["SELECT", "INSERT", "UPDATE"]
 
   on_schema_object {
     future {
@@ -98,7 +98,7 @@ resource "snowflake_grant_privileges_to_account_role" "engineer_silver_views_fut
 # Analyst Objects
 resource "snowflake_grant_privileges_to_account_role" "analyst_gold_tables_existing" {
   account_role_name = snowflake_account_role.analyst.name
-  privileges        = ["SELECT", "INSERT", "UPDATE", "DELETE", "TRUNCATE"]
+  privileges        = ["SELECT", "INSERT", "UPDATE"]
 
   on_schema_object {
     all {
@@ -110,7 +110,7 @@ resource "snowflake_grant_privileges_to_account_role" "analyst_gold_tables_exist
 
 resource "snowflake_grant_privileges_to_account_role" "analyst_gold_tables_future" {
   account_role_name = snowflake_account_role.analyst.name
-  privileges        = ["SELECT", "INSERT", "UPDATE", "DELETE", "TRUNCATE"]
+  privileges        = ["SELECT", "INSERT", "UPDATE"]
 
   on_schema_object {
     future {
