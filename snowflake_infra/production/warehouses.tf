@@ -1,4 +1,4 @@
-module "prod_service_wh" {
+module "prod_service_compute" {
   source  = "../modules/warehouse"
-  wh_name = "SOLAZ_PROD_SERVICE_WH"
+  wh_name = "SOLAZ_PROD_SERVICE_COMPUTE"
 }

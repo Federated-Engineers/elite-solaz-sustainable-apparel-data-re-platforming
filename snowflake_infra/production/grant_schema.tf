@@ -18,7 +18,7 @@ resource "snowflake_grant_privileges_to_account_role" "dbt_cloud_all_schema_futu
 
 resource "snowflake_grant_privileges_to_account_role" "airflow_bronze_schema" {
   account_role_name = snowflake_account_role.airflow.name
-  privileges        = ["USAGE", "CREATE TABLE"]
+  privileges        = ["USAGE"]
 
   on_schema {
     schema_name = "SOLAZ_PROD_DB.BRONZE"
