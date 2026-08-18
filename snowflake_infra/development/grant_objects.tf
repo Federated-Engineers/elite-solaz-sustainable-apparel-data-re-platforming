@@ -27,7 +27,7 @@ resource "snowflake_grant_privileges_to_account_role" "engineer_gold_and_silver_
     }
   }
 
-  depends_on = [module.prod_database]
+  depends_on = [module.dev_database]
 }
 
 resource "snowflake_grant_privileges_to_account_role" "engineer_gold_and_silver_views_existing" {
@@ -43,7 +43,7 @@ resource "snowflake_grant_privileges_to_account_role" "engineer_gold_and_silver_
     }
   }
 
-  depends_on = [module.prod_database]
+  depends_on = [module.dev_database]
 }
 
 resource "snowflake_grant_privileges_to_account_role" "engineer_gold_and_silver_views_future" {
@@ -59,7 +59,7 @@ resource "snowflake_grant_privileges_to_account_role" "engineer_gold_and_silver_
     }
   }
 
-  depends_on = [module.prod_database]
+  depends_on = [module.dev_database]
 }
 
 
@@ -75,7 +75,7 @@ resource "snowflake_grant_privileges_to_account_role" "analyst_gold_tables_exist
     }
   }
 
-  depends_on = [module.prod_database]
+  depends_on = [module.dev_database]
 }
 
 resource "snowflake_grant_privileges_to_account_role" "analyst_gold_tables_future" {
@@ -89,7 +89,7 @@ resource "snowflake_grant_privileges_to_account_role" "analyst_gold_tables_futur
     }
   }
 
-  depends_on = [module.prod_database]
+  depends_on = [module.dev_database]
 }
 
 resource "snowflake_grant_privileges_to_account_role" "analyst_gold_views_existing" {
@@ -103,7 +103,7 @@ resource "snowflake_grant_privileges_to_account_role" "analyst_gold_views_existi
     }
   }
 
-  depends_on = [module.prod_database]
+  depends_on = [module.dev_database]
 }
 
 resource "snowflake_grant_privileges_to_account_role" "analyst_gold_views_future" {
@@ -117,5 +117,5 @@ resource "snowflake_grant_privileges_to_account_role" "analyst_gold_views_future
     }
   }
 
-  depends_on = [module.prod_database]
+  depends_on = [module.dev_database]
 }
