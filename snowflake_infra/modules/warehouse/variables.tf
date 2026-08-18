@@ -1,7 +1,7 @@
-variable "wh_name" {
+variable "compute_name" {
   type = string
 }
 
-output "wh_name" {
-  value = snowflake_warehouse.wh.name
+output "compute_name" {
+  value = snowflake_warehouse.compute.name
 }

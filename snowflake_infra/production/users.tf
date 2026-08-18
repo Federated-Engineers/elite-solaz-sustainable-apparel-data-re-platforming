@@ -6,7 +6,7 @@ module "dbt_cloud_user" {
   password   = data.aws_ssm_parameter.ecs_user_password.value
 
   default_role      = snowflake_account_role.dbt_cloud.name
-  default_warehouse = module.prod_service_wh.wh_name
+  default_warehouse = module.prod_service_compute.compute_name
 
 }
 
@@ -18,6 +18,6 @@ module "airflow_user" {
   password   = data.aws_ssm_parameter.ecs_user_password.value
 
   default_role      = snowflake_account_role.airflow.name
-  default_warehouse = module.prod_service_wh.wh_name
+  default_warehouse = module.prod_service_compute.compute_name
 
 }

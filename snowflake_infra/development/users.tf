@@ -6,7 +6,7 @@ module "engineer_user" {
   password   = data.aws_ssm_parameter.engineer_user_password.value
 
   default_role      = snowflake_account_role.engineer.name
-  default_warehouse = module.dev_human_wh.wh_name
+  default_warehouse = module.dev_data_team_compute.compute_name
 
 }
 
@@ -18,6 +18,6 @@ module "analyst_user" {
   password   = data.aws_ssm_parameter.analyst_user_password.value
 
   default_role      = snowflake_account_role.analyst.name
-  default_warehouse = module.dev_human_wh.wh_name
+  default_warehouse = module.dev_data_team_compute.compute_name
 
 }

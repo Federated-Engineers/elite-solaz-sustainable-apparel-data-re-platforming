@@ -1,95 +1,55 @@
-resource "snowflake_grant_privileges_to_account_role" "engineer_gold_tables_existing" {
+resource "snowflake_grant_privileges_to_account_role" "engineer_gold_and_silver_tables_existing" {
+  for_each = local.dev_schemas
+
   account_role_name = snowflake_account_role.engineer.name
   privileges        = ["SELECT", "INSERT", "UPDATE"]
 
   on_schema_object {
     all {
       object_type_plural = "TABLES"
-      in_schema          = "SOLAZ_DEV_DB.GOLD"
+      in_schema          = "SOLAZ_DEV_DB.${each.value}"
     }
   }
 }
 
-resource "snowflake_grant_privileges_to_account_role" "engineer_gold_tables_future" {
+resource "snowflake_grant_privileges_to_account_role" "engineer_gold_and_silver_tables_future" {
+  for_each = local.dev_schemas
+
   account_role_name = snowflake_account_role.engineer.name
   privileges        = ["SELECT", "INSERT", "UPDATE"]
 
   on_schema_object {
     future {
       object_type_plural = "TABLES"
-      in_schema          = "SOLAZ_DEV_DB.GOLD"
+      in_schema          = "SOLAZ_DEV_DB.${each.value}"
     }
   }
 }
 
-resource "snowflake_grant_privileges_to_account_role" "engineer_gold_views_existing" {
+resource "snowflake_grant_privileges_to_account_role" "engineer_gold_and_silver_views_existing" {
+  for_each = local.dev_schemas
+
   account_role_name = snowflake_account_role.engineer.name
   privileges        = ["SELECT"]
 
   on_schema_object {
     all {
       object_type_plural = "VIEWS"
-      in_schema          = "SOLAZ_DEV_DB.GOLD"
+      in_schema          = "SOLAZ_DEV_DB.${each.value}"
     }
   }
 }
 
-resource "snowflake_grant_privileges_to_account_role" "engineer_gold_views_future" {
+resource "snowflake_grant_privileges_to_account_role" "engineer_gold_and_silver_views_future" {
+  for_each = local.dev_schemas
+
   account_role_name = snowflake_account_role.engineer.name
   privileges        = ["SELECT"]
 
   on_schema_object {
     future {
       object_type_plural = "VIEWS"
-      in_schema          = "SOLAZ_DEV_DB.GOLD"
-    }
-  }
-}
-
-resource "snowflake_grant_privileges_to_account_role" "engineer_silver_tables_existing" {
-  account_role_name = snowflake_account_role.engineer.name
-  privileges        = ["SELECT", "INSERT", "UPDATE"]
-
-  on_schema_object {
-    all {
-      object_type_plural = "TABLES"
-      in_schema          = "SOLAZ_DEV_DB.SILVER"
-    }
-  }
-}
-
-resource "snowflake_grant_privileges_to_account_role" "engineer_silver_tables_future" {
-  account_role_name = snowflake_account_role.engineer.name
-  privileges        = ["SELECT", "INSERT", "UPDATE"]
-
-  on_schema_object {
-    future {
-      object_type_plural = "TABLES"
-      in_schema          = "SOLAZ_DEV_DB.SILVER"
-    }
-  }
-}
-
-resource "snowflake_grant_privileges_to_account_role" "engineer_silver_views_existing" {
-  account_role_name = snowflake_account_role.engineer.name
-  privileges        = ["SELECT"]
-
-  on_schema_object {
-    all {
-      object_type_plural = "VIEWS"
-      in_schema          = "SOLAZ_DEV_DB.SILVER"
-    }
-  }
-}
-
-resource "snowflake_grant_privileges_to_account_role" "engineer_silver_views_future" {
-  account_role_name = snowflake_account_role.engineer.name
-  privileges        = ["SELECT"]
-
-  on_schema_object {
-    future {
-      object_type_plural = "VIEWS"
-      in_schema          = "SOLAZ_DEV_DB.SILVER"
+      in_schema          = "SOLAZ_DEV_DB.${each.value}"
     }
   }
 }
