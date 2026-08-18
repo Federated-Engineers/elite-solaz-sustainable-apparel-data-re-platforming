@@ -1,0 +1,1 @@
+prod_read_only_role_name = "SOLAZ_PROD_READ_ONLY_ROLE"

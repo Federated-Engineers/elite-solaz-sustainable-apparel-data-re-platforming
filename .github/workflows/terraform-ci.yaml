@@ -1,0 +1,30 @@
+name: Terraform CI
+
+on:
+  pull_request:
+    paths:
+      - "snowflake_infra/**"
+
+jobs:
+  terraform:
+    runs-on: ubuntu-24.04
+
+    strategy:
+      matrix:
+        environment:
+          - production
+          - development
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - name: terraform fmt
+        uses: dflook/terraform-fmt-check@v1
+        with:
+          path: ./snowflake_infra/${{ matrix.environment }}
+
+      - name: terraform validate
+        uses: dflook/terraform-validate@v2
+        with:
+          path: ./snowflake_infra/${{ matrix.environment }}
