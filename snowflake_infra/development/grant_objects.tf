@@ -116,6 +116,6 @@ resource "snowflake_grant_privileges_to_account_role" "analyst_gold_views_future
       in_schema          = "SOLAZ_DEV_DB.GOLD"
     }
   }
-  
+
   depends_on = [module.prod_database]
 }

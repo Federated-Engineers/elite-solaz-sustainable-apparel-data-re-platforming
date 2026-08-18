@@ -5,7 +5,7 @@ resource "snowflake_grant_privileges_to_account_role" "analyst_gold_schema" {
   on_schema {
     schema_name = "SOLAZ_DEV_DB.GOLD"
   }
-  
+
   depends_on = [module.prod_database]
 }
 
