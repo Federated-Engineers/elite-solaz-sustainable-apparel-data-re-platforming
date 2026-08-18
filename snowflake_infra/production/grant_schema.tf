@@ -23,4 +23,6 @@ resource "snowflake_grant_privileges_to_account_role" "airflow_bronze_schema" {
   on_schema {
     schema_name = "SOLAZ_PROD_DB.BRONZE"
   }
+
+  depends_on = [module.prod_database]
 }

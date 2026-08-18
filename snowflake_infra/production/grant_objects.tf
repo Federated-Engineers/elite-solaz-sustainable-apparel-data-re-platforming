@@ -58,6 +58,8 @@ resource "snowflake_grant_privileges_to_account_role" "airflow_bronze_tables_exi
       in_schema          = "SOLAZ_PROD_DB.BRONZE"
     }
   }
+
+  depends_on = [module.prod_database]
 }
 
 resource "snowflake_grant_privileges_to_account_role" "airflow_bronze_tables_future" {
@@ -70,4 +72,6 @@ resource "snowflake_grant_privileges_to_account_role" "airflow_bronze_tables_fut
       in_schema          = "SOLAZ_PROD_DB.BRONZE"
     }
   }
+
+  depends_on = [module.prod_database]
 }

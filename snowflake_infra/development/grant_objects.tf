@@ -10,6 +10,8 @@ resource "snowflake_grant_privileges_to_account_role" "engineer_gold_and_silver_
       in_schema          = "SOLAZ_DEV_DB.${each.value}"
     }
   }
+
+  depends_on = [module.dev_database]
 }
 
 resource "snowflake_grant_privileges_to_account_role" "engineer_gold_and_silver_tables_future" {
@@ -24,6 +26,8 @@ resource "snowflake_grant_privileges_to_account_role" "engineer_gold_and_silver_
       in_schema          = "SOLAZ_DEV_DB.${each.value}"
     }
   }
+
+  depends_on = [module.prod_database]
 }
 
 resource "snowflake_grant_privileges_to_account_role" "engineer_gold_and_silver_views_existing" {
@@ -38,6 +42,8 @@ resource "snowflake_grant_privileges_to_account_role" "engineer_gold_and_silver_
       in_schema          = "SOLAZ_DEV_DB.${each.value}"
     }
   }
+
+  depends_on = [module.prod_database]
 }
 
 resource "snowflake_grant_privileges_to_account_role" "engineer_gold_and_silver_views_future" {
@@ -52,6 +58,8 @@ resource "snowflake_grant_privileges_to_account_role" "engineer_gold_and_silver_
       in_schema          = "SOLAZ_DEV_DB.${each.value}"
     }
   }
+
+  depends_on = [module.prod_database]
 }
 
 
@@ -66,6 +74,8 @@ resource "snowflake_grant_privileges_to_account_role" "analyst_gold_tables_exist
       in_schema          = "SOLAZ_DEV_DB.GOLD"
     }
   }
+
+  depends_on = [module.prod_database]
 }
 
 resource "snowflake_grant_privileges_to_account_role" "analyst_gold_tables_future" {
@@ -78,6 +88,8 @@ resource "snowflake_grant_privileges_to_account_role" "analyst_gold_tables_futur
       in_schema          = "SOLAZ_DEV_DB.GOLD"
     }
   }
+
+  depends_on = [module.prod_database]
 }
 
 resource "snowflake_grant_privileges_to_account_role" "analyst_gold_views_existing" {
@@ -90,6 +102,8 @@ resource "snowflake_grant_privileges_to_account_role" "analyst_gold_views_existi
       in_schema          = "SOLAZ_DEV_DB.GOLD"
     }
   }
+
+  depends_on = [module.prod_database]
 }
 
 resource "snowflake_grant_privileges_to_account_role" "analyst_gold_views_future" {
@@ -102,4 +116,6 @@ resource "snowflake_grant_privileges_to_account_role" "analyst_gold_views_future
       in_schema          = "SOLAZ_DEV_DB.GOLD"
     }
   }
+  
+  depends_on = [module.prod_database]
 }
