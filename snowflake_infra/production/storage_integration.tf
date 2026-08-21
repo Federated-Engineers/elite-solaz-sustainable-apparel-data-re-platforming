@@ -9,15 +9,15 @@ resource "snowflake_storage_integration_aws" "storage_integration" {
 
 resource "snowflake_stage_external_s3" "stage" {
   name                = "BRONZE_STAGE"
-  database            = "SOLAZ_PROD_DB"
-  schema              = "BRONZE"
+  database            = module.prod_database.database_name
+  schema              = module.prod_database.schema_names["BRONZE"]
   url                 = "s3://solaz-supplychain-lake/telemetry/"
   storage_integration = snowflake_storage_integration_aws.storage_integration.name
 }
 
 resource "snowflake_file_format" "bronze_json_format" {
   name        = "BRONZE_JSON_FORMAT"
-  database    = "SOLAZ_PROD_DB"
-  schema      = "BRONZE"
+  database    = module.prod_database.database_name
+  schema      = module.prod_database.schema_names["BRONZE"]
   format_type = "JSON"
 }

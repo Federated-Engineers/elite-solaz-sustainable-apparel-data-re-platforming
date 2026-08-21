@@ -1,10 +1,10 @@
 resource "snowflake_external_table" "rfid_scans" {
-  database = "SOLAZ_PROD_DB"
-  schema   = "BRONZE"
+  database = module.prod_database.database_name
+  schema   = module.prod_database.schema_names["BRONZE"]
   name     = "rfid_scans"
 
-  file_format = "FORMAT_NAME = SOLAZ_PROD_DB.BRONZE.BRONZE_JSON_FORMAT"
-  location    = "@SOLAZ_PROD_DB.BRONZE.BRONZE_STAGE/rfid_scans/"
+  file_format = "FORMAT_NAME = ${snowflake_file_format.bronze_json_format.fully_qualified_name}"
+  location    = "@${snowflake_stage_external_s3.stage.fully_qualified_name}/rfid_scans/"
 
   column {
     name = "scan_id"
