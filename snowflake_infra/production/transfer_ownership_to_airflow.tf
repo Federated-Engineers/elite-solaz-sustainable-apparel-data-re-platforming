@@ -23,3 +23,13 @@ resource "snowflake_grant_privileges_to_account_role" "airflow_use_stage" {
     object_name = snowflake_stage_external_s3.stage.fully_qualified_name
   }
 }
+
+resource "snowflake_grant_privileges_to_account_role" "airflow_file_format_usage" {
+  account_role_name = snowflake_account_role.airflow.name
+  privileges        = ["USAGE"]
+
+  on_schema_object {
+    object_type = "FILE FORMAT"
+    object_name = snowflake_file_format.bronze_json_format.fully_qualified_name
+  }
+}
