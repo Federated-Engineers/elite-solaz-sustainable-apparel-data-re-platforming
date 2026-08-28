@@ -12,7 +12,7 @@ resource "snowflake_table" "dim_customers" {
 
   column {
     name = "REGISTRATION_DATE"
-    type = "VARCHAR"
+    type = "TIMESTAMP_NTZ"
   }
 
   column {
@@ -33,6 +33,11 @@ resource "snowflake_table" "dim_customers" {
   column {
     name = "IS_ACTIVE"
     type = "BOOLEAN"
+  }
+
+  column {
+    name = "LOADED_AT"
+    type = "TIMESTAMP_NTZ"
   }
 }
 
@@ -70,6 +75,11 @@ resource "snowflake_table" "dim_products" {
     name = "RETAIL_MSRP_EUR"
     type = "NUMBER(10,2)"
   }
+
+  column {
+    name = "LOADED_AT"
+    type = "TIMESTAMP_NTZ"
+  }
 }
 
 resource "snowflake_table" "app_orders" {
@@ -94,7 +104,7 @@ resource "snowflake_table" "app_orders" {
 
   column {
     name = "TRANSACTION_TIMESTAMP"
-    type = "VARCHAR"
+    type = "TIMESTAMP_NTZ"
   }
 
   column {
@@ -125,5 +135,10 @@ resource "snowflake_table" "app_orders" {
   column {
     name = "NET_REVENUE_EUR"
     type = "NUMBER(10,2)"
+  }
+
+  column {
+    name = "LOADED_AT"
+    type = "TIMESTAMP_NTZ"
   }
 }
