@@ -8,7 +8,7 @@ resource "dbtcloud_job" "slim_ci_job" {
     "dbt build -s state:modified+ --fail-fast"
   ]
 
-  deferring_environment_id = dbtcloud_environment.production.environment_id
+  deferring_environment_id = dbtcloud_environment.prod.environment_id
 
   generate_docs        = false
   run_generate_sources = false
