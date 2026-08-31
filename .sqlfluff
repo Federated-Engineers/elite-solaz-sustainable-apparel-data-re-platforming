@@ -3,8 +3,8 @@ dialect = snowflake
 templater = jinja
 
 [sqlfluff:templater:jinja]
-project_dir = ./kings_county_dbt_project
-profiles_dir = ./kings_county_dbt_project
+project_dir = ./solaz_dbt
+profiles_dir = ./solaz_dbt
 
 max_line_length = 80
 

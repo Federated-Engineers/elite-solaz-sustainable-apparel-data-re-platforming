@@ -1,4 +1,4 @@
-solas_dbt:
+solaz_dbt:
   target: dev
 
   outputs:
