@@ -4,8 +4,7 @@ on:
   pull_request:
     paths:
       - "**.sql"
-      - "solaz_dbt/**"
-      - "dbt_project.yml"
+      - "solaz_dbt/**.sql"
 
 jobs:
   lint:

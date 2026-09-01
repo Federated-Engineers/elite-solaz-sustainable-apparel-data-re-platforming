@@ -5,7 +5,6 @@ resource "dbtcloud_global_connection" "dbt_cloud_snowflake_connection" {
     account   = var.snowflake_account
     database  = var.snowflake_prod_database
     warehouse = var.snowflake_service_compute
-    #role      = data.terraform_remote_state.snowflake_prod_tfstate.outputs.dbt_cloud_role
-    role = "SOLAZ_DBT_CLOUD_ROLE"
+    role      = data.terraform_remote_state.snowflake_prod_tfstate.outputs.dbt_cloud_role
   }
 }
