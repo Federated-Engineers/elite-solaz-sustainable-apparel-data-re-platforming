@@ -1,0 +1,21 @@
+[sqlfluff]
+dialect = snowflake
+templater = jinja
+
+[sqlfluff:templater:jinja]
+project_dir = ./solaz_dbt
+profiles_dir = ./solaz_dbt
+
+max_line_length = 80
+
+[sqlfluff:rules:capitalisation.keywords]
+capitalisation_policy = upper
+
+[sqlfluff:rules:capitalisation.identifiers]
+extended_capitalisation_policy = lower
+
+[sqlfluff:layout:type:comma]
+line_position = trailing
+
+[sqlfluff:layout:type:binary_operator]
+line_position = leading
