@@ -4,6 +4,8 @@ resource "snowflake_grant_privileges_to_account_role" "engineer_gold_and_silver_
   account_role_name = snowflake_account_role.engineer.name
   privileges        = ["SELECT", "INSERT", "UPDATE"]
 
+  always_apply = true
+
   on_schema_object {
     all {
       object_type_plural = "TABLES"
@@ -35,6 +37,8 @@ resource "snowflake_grant_privileges_to_account_role" "engineer_gold_and_silver_
 
   account_role_name = snowflake_account_role.engineer.name
   privileges        = ["SELECT"]
+
+  always_apply = true
 
   on_schema_object {
     all {
