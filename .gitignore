@@ -3,3 +3,8 @@
 *.tfstate.*
 .terraform/
 .terraform.lock.hcl
+.env
+logs/
+solaz_dbt/.user.yml
+solaz_dbt/logs/
+solaz_dbt/target/
