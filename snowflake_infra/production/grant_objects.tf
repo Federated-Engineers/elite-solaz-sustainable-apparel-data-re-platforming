@@ -108,8 +108,8 @@ resource "snowflake_grant_privileges_to_account_role" "airflow_bronze_tables_fut
   depends_on = [module.prod_database]
 }
 
-resource "snowflake_grant_privileges_to_account_role" "dbt_cloud_all_external_tables" {
-  account_role_name = snowflake_account_role.dbt_cloud.name
+resource "snowflake_grant_privileges_to_account_role" "airflow_all_external_tables" {
+  account_role_name = snowflake_account_role.airflow.name
   privileges        = ["SELECT"]
 
   always_apply = true
@@ -122,8 +122,8 @@ resource "snowflake_grant_privileges_to_account_role" "dbt_cloud_all_external_ta
   }
 }
 
-resource "snowflake_grant_privileges_to_account_role" "dbt_cloud_future_external_tables" {
-  account_role_name = snowflake_account_role.dbt_cloud.name
+resource "snowflake_grant_privileges_to_account_role" "airflow_future_external_tables" {
+  account_role_name = snowflake_account_role.airflow.name
   privileges        = ["SELECT"]
 
   on_schema_object {
