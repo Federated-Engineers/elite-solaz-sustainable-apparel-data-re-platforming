@@ -88,3 +88,30 @@ resource "snowflake_grant_privileges_to_account_role" "prod_read_only_future_vie
     }
   }
 }
+
+# Grant external tables
+resource "snowflake_grant_privileges_to_account_role" "prod_read_only_external_tables" {
+  account_role_name = snowflake_account_role.prod_read_only.name
+  privileges        = ["SELECT"]
+
+  always_apply = true
+
+  on_schema_object {
+    all {
+      object_type_plural = "EXTERNAL TABLES"
+      in_database        = "SOLAZ_PROD_DB"
+    }
+  }
+}
+
+resource "snowflake_grant_privileges_to_account_role" "prod_read_only_future_external_tables" {
+  account_role_name = snowflake_account_role.prod_read_only.name
+  privileges        = ["SELECT"]
+
+  on_schema_object {
+    future {
+      object_type_plural = "EXTERNAL TABLES"
+      in_database        = "SOLAZ_PROD_DB"
+    }
+  }
+}
