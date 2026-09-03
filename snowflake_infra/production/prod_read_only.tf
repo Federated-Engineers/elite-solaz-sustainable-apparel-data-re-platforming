@@ -40,6 +40,8 @@ resource "snowflake_grant_privileges_to_account_role" "prod_read_only_tables" {
   account_role_name = snowflake_account_role.prod_read_only.name
   privileges        = ["SELECT"]
 
+  always_apply = true
+
   on_schema_object {
     all {
       object_type_plural = "TABLES"
@@ -64,6 +66,8 @@ resource "snowflake_grant_privileges_to_account_role" "prod_read_only_future_tab
 resource "snowflake_grant_privileges_to_account_role" "prod_read_only_views" {
   account_role_name = snowflake_account_role.prod_read_only.name
   privileges        = ["SELECT"]
+
+  always_apply = true
 
   on_schema_object {
     all {
