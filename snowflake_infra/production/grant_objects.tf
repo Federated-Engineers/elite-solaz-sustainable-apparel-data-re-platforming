@@ -2,6 +2,8 @@ resource "snowflake_grant_privileges_to_account_role" "dbt_cloud_all_tables_exis
   account_role_name = snowflake_account_role.dbt_cloud.name
   privileges        = ["SELECT", "INSERT", "UPDATE", "DELETE", "TRUNCATE"]
 
+  always_apply = true
+
   on_schema_object {
     all {
       object_type_plural = "TABLES"
@@ -26,6 +28,8 @@ resource "snowflake_grant_privileges_to_account_role" "dbt_cloud_all_views_exist
   account_role_name = snowflake_account_role.dbt_cloud.name
   privileges        = ["SELECT"]
 
+  always_apply = true
+
   on_schema_object {
     all {
       object_type_plural = "VIEWS"
@@ -46,11 +50,39 @@ resource "snowflake_grant_privileges_to_account_role" "dbt_cloud_all_views_futur
   }
 }
 
+resource "snowflake_grant_privileges_to_account_role" "dbt_cloud_all_external_tables" {
+  account_role_name = snowflake_account_role.dbt_cloud.name
+  privileges        = ["SELECT"]
+
+  always_apply = true
+
+  on_schema_object {
+    all {
+      object_type_plural = "EXTERNAL TABLES"
+      in_database        = "SOLAZ_PROD_DB"
+    }
+  }
+}
+
+resource "snowflake_grant_privileges_to_account_role" "dbt_cloud_future_external_tables" {
+  account_role_name = snowflake_account_role.dbt_cloud.name
+  privileges        = ["SELECT"]
+
+  on_schema_object {
+    future {
+      object_type_plural = "EXTERNAL TABLES"
+      in_database        = "SOLAZ_PROD_DB"
+    }
+  }
+}
+
 
 # Airflow objects
 resource "snowflake_grant_privileges_to_account_role" "airflow_bronze_tables_existing" {
   account_role_name = snowflake_account_role.airflow.name
   privileges        = ["SELECT", "INSERT", "UPDATE", "DELETE", "TRUNCATE"]
+
+  always_apply = true
 
   on_schema_object {
     all {
@@ -74,4 +106,30 @@ resource "snowflake_grant_privileges_to_account_role" "airflow_bronze_tables_fut
   }
 
   depends_on = [module.prod_database]
+}
+
+resource "snowflake_grant_privileges_to_account_role" "airflow_all_external_tables" {
+  account_role_name = snowflake_account_role.airflow.name
+  privileges        = ["SELECT"]
+
+  always_apply = true
+
+  on_schema_object {
+    all {
+      object_type_plural = "EXTERNAL TABLES"
+      in_database        = "SOLAZ_PROD_DB"
+    }
+  }
+}
+
+resource "snowflake_grant_privileges_to_account_role" "airflow_future_external_tables" {
+  account_role_name = snowflake_account_role.airflow.name
+  privileges        = ["SELECT"]
+
+  on_schema_object {
+    future {
+      object_type_plural = "EXTERNAL TABLES"
+      in_database        = "SOLAZ_PROD_DB"
+    }
+  }
 }

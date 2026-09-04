@@ -10,11 +10,6 @@ terraform {
       version = "6.51.0"
     }
 
-    # Needed to get dbt_cloud's Snowflake credentials 
-    snowflake = {
-      source  = "snowflakedb/snowflake"
-      version = "2.17.0"
-    }
   }
 }
 
@@ -26,8 +21,4 @@ provider "dbtcloud" {
 
 provider "aws" {
   region = "eu-central-1"
-}
-
-provider "snowflake" {
-
 }

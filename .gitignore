@@ -4,3 +4,7 @@
 .terraform/
 .terraform.lock.hcl
 .env
+logs/
+solaz_dbt/target/
+solaz_dbt/logs/
+solaz_dbt/.user.yml
