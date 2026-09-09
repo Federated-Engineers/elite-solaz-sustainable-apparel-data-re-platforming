@@ -15,7 +15,7 @@ resource "dbtcloud_job" "slim_ci_job" {
   triggers_on_draft_pr = false
 
   triggers = {
-    github_webhook       = false
+    github_webhook       = true
     git_provider_webhook = true
     schedule             = false
     on_merge             = false
