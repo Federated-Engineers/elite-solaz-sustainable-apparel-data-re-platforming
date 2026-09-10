@@ -9,13 +9,14 @@ profiles_dir = ./solaz_dbt
 max_line_length = 80
 
 [sqlfluff:rules:capitalisation.keywords]
-capitalisation_policy = upper
+capitalisation_policy = lower
 
 [sqlfluff:rules:capitalisation.identifiers]
 extended_capitalisation_policy = lower
 
 [sqlfluff:layout:type:comma]
-line_position = trailing
+spacing_before = touch
+line_position = leading
 
 [sqlfluff:layout:type:binary_operator]
 line_position = leading

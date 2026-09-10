@@ -1,0 +1,18 @@
+version: 2
+
+sources:
+  - name: s3
+    description: Raw RFID telemetry data ingested in the Snowflake bronze schema
+      through S3 storage integration.
+
+    database: SOLAZ_PROD_DB
+    schema: BRONZE
+
+    quoting:
+      database: false
+      schema: false
+      identifier: true
+
+    tables:
+      - name: rfid_scans
+        description: Telemetry data tracking logistics.
