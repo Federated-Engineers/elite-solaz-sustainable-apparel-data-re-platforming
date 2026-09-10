@@ -1,5 +1,5 @@
 output "dbt_cloud_user" {
-  value     = module.dbt_cloud_user.user_name
+  value     = module.dbt_cloud_user.login_name
   sensitive = true
 }
 
