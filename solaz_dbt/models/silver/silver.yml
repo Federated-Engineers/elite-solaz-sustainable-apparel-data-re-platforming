@@ -1,15 +1,15 @@
 version: 2
-# There are 5 models gotten from 3 sources (PostgreSQL, Google Sheets, and S3) and 5 tables
+# There are 5 models gotten from 3 sources (PostgreSQL, Google Sheets, and S3) and 5 bronze tables
 
 # dim_customers table from postgres has a corresponding staging model stg_postgres__dim_customers
 # dim_products table from postgres has a corresponding staging model stg_postgres__dim_products
 # app_orders table from postgres has a corresponding staging model stg_postgres__app_orders
 # orders table from google_sheets has a corresponding staging model stg_gsheets__orders
-# telemetry table from s3 has a corresponding staging model stg_s3__telemetry
+# rfid_scans table from s3 has a corresponding staging model stg_s3__rfid_scans
 
 
 models:
-  # dim_customers
+  # from dim_customers table in bronze schema
 
   - name: stg_postgres__dim_customers
     description: Staging model for the dim_customers table from the PostgreSQL source.
@@ -73,7 +73,7 @@ models:
           - not_null
 
 
-  # dim_products
+  # from dim_products table in bronze schema
   - name: stg_postgres__dim_products
     description: Staging model for the dim_products table from the PostgreSQL source.
 
@@ -115,7 +115,7 @@ models:
           - not_null
 
 
-  # app_orders
+  # from app_orders table in bronze schema
   - name: stg_postgres__app_orders
     description: Staging model for the app_orders table from the PostgreSQL source.
 
@@ -177,7 +177,7 @@ models:
           - not_null
 
 
-  # orders
+  # from orders table in bronze schema
   - name: stg_gsheets__orders
     description: Staging model for the orders table from the Google Sheets source.
 
@@ -242,8 +242,8 @@ models:
           - not_null
 
 
-  # telemetry
-  - name: stg_s3__telemetry
+  # from rfid_scans table in bronze schema
+  - name: stg_s3__rfid_scans
     description: Staging model for the telemetry table from the S3 source (storage integration).
 
     columns:

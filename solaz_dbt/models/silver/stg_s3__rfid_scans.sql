@@ -1,4 +1,4 @@
-with telemetry_data as (
+with rfid_scans as (
     select
         scan_id
         , sku_id
@@ -14,4 +14,4 @@ with telemetry_data as (
 )
 
 select distinct *
-from telemetry_data
+from rfid_scans
