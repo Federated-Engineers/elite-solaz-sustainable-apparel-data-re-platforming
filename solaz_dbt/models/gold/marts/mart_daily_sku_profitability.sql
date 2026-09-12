@@ -61,15 +61,18 @@ with dim_customers as (
         , customer_tier
         , sum(units_sold) as total_units_sold
         , sum(net_revenue_eur) as total_net_revenue_eur
-        , sum(total_units_sold * manufacturing_cost_eur)
+        , sum(units_sold * manufacturing_cost_eur)
             as total_manufacturing_cost_eur
 
         , case
-            when total_net_revenue_eur = 0 then 0
-            else (
-                (total_net_revenue_eur - total_manufacturing_cost_eur)
-                / total_net_revenue_eur
-            ) * 100
+            when total_net_revenue_eur = 0 then 0.00
+            else round(
+                (
+                    (total_net_revenue_eur - total_manufacturing_cost_eur
+                    ) / total_net_revenue_eur
+                ) * 100
+                , 2
+            )
         end as net_profit_margin_percentage
 
     from joined_sales_and_inventory
