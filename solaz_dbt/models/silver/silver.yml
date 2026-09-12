@@ -93,11 +93,25 @@ models:
         description: Category to which the product belongs.
         data_tests:
           - not_null
+          - accepted_values:
+              arguments:
+                values: 
+                  - Outerwear
+                  - Activewear
+                  - Footwear
+                  - Accessories
 
       - name: upcycled_material_type
         description: Type of upcycled material used in the product.
         data_tests:
           - not_null
+          - accepted_values:
+              arguments:
+                values: 
+                  - Regenerated Nylon
+                  - Upcycled Marine Plastic
+                  - Recycled Rubber
+                  - Organic Mediterranean Cotton
 
       - name: manufacturing_cost_eur
         description: Manufacturing cost of the product in EUR.

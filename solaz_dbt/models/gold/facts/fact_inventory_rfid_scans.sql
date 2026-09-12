@@ -8,8 +8,6 @@ with stg_s3__rfid_scans as (
         , rfid_tag_status
 
     from {{ ref('stg_s3__rfid_scans') }}
-    limit 10 -- noqa: AM09
-    -- limited to manage compute
 )
 
 , stg_postgres__dim_products as (
@@ -18,6 +16,7 @@ with stg_s3__rfid_scans as (
         , product_name
         , category
         , upcycled_material_type
+        , manufacturing_cost_eur
 
     from {{ ref('stg_postgres__dim_products') }}
 )
@@ -33,6 +32,7 @@ with stg_s3__rfid_scans as (
         , products.product_name
         , products.category
         , products.upcycled_material_type
+        , products.manufacturing_cost_eur
 
     from stg_s3__rfid_scans as scans
     left join stg_postgres__dim_products as products
@@ -40,4 +40,4 @@ with stg_s3__rfid_scans as (
 )
 
 select *
-from joined;
+from joined
