@@ -13,7 +13,7 @@ models:
   solaz_dbt:
     silver:
       +schema: SILVER
-      +materialized: table
+      +materialized: view
 
     gold:
       +schema: GOLD

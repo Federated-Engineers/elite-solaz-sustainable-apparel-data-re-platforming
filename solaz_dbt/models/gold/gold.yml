@@ -1,0 +1,196 @@
+version: 2
+# Two dimensional models, 2 fact models, and 1 mart model are defined in this file
+ 
+# dim_products references the staging model stg_postgres__dim_products
+# dim_customers references the staging model stg_postgres__dim_customers
+
+# fact_inventory_rfid_scans references the staging models stg_s3__rfid_scans and dim_products
+# fact_omnichannel_sales references the staging models stg_postgres__app_orders and stg_gsheets__orders
+
+# mart_daily_sku_profitability references the fact models fact_omnichannel_sales
+# and fact_inventory_rfid_scans, as well as the dim_customers model
+
+
+models:
+  # dim_customers
+
+  - name: dim_customers
+    description: Dimensional model for the dim_customers table from the
+      stg_postgres__dim_customers staging model.
+    
+    columns:
+      - name: customer_id
+        description: Unique identifier for the customer.
+        data_tests:
+          - unique
+          - not_null
+
+      - name: registration_date
+        description: Timestamp of when the customer registered.
+
+      - name: customer_tier
+        description: Tier the customer belongs to
+
+      - name: country_code
+        description: Country code of the customer.
+      
+      - name: preferred_language
+        description: Preferred language of the customer.
+
+      - name: is_active
+        description: Indicates if the customer is active. Boolean value.
+  
+  
+  # dim_products
+  - name: dim_products
+    description: Dimensional model for the dim_products table from the
+      stg_postgres__dim_products staging model.
+
+    columns:
+      - name: sku_id
+        description: Unique identifier for the product.
+        data_tests:
+          - unique
+          - not_null
+
+      - name: product_name
+        description: Name of the product.
+
+      - name: category
+        description: Category to which the product belongs.
+
+      - name: upcycled_material_type
+        description: Type of upcycled material used in the product.
+
+      - name: manufacturing_cost_eur
+        description: Manufacturing cost of the product in EUR.
+
+      - name: retail_msrp_eur
+        description: Retail MSRP of the product in EUR.
+
+
+  # fact_inventory_rfid_scans
+  - name: fact_inventory_rfid_scans
+    description: Fact model for inventory RFID scans, combining telemetry data
+      from S3 and product information from PostgreSQL. 
+
+    columns:
+      - name: scan_id
+        description: Unique identifier for the RFID scan.
+        data_tests:
+          - not_null
+
+      - name: sku_id
+        description: Unique identifier for the product associated with the scan.
+
+      - name: facility_id
+        description: Identifier for the facility where the scan occurred. 
+
+      - name: scan_timestamp
+        description: Timestamp of when the RFID scan was recorded.
+
+      - name: scan_type
+        description: Type of RFID scan (i.e Shelf Placement, Warehouse Check-In,
+          Point-of-Sale Checkout, Boutique Transfer).
+      
+      - name: rfid_tag_status
+        description: Status of the RFID tag (i.e Active, Sold, Damaged/Shrinkage).
+
+      - name: product_name
+        description: Name of the product associated with the scan.
+
+      - name: category
+        description: Category of the product associated with the scan.
+          (i.e Outerwear, Activewear, Footwear, Accessories).
+
+      - name: upcycled_material_type
+        description: Type of upcycled material used in the product associated
+          with the scan. (i.e Regenerated Nylon, Upcycled Marine Plastic,
+          Recycled Rubber, Organic Mediterranean Cotton).
+
+
+  # fact_omnichannel_sales
+  - name: fact_omnichannel_sales
+    description: Fact model for omnichannel sales, combining orders data from
+      PostgreSQL and Google Sheets sources. 
+    
+    columns:
+      - name: transaction_id
+        description: Unique identifier for the order transaction.
+        data_tests:
+          - not_null
+      
+      - name: sku_id
+        description: Unique identifier for the product associated with the order.
+
+      - name: customer_id
+        description: Unique identifier for the customer who placed the order.
+
+      - name: transaction_timestamp
+        description: Timestamp of when the order transaction occurred.
+
+      - name: sales_channel
+        description: Channel through which the order was placed
+          (i.e postgres_ecommerce_app, google_sheets_wholesale_pos).
+
+      - name: units_sold
+        description: Number of units sold in the order transaction.
+
+      - name: gross_revenue_eur
+        description: Gross revenue generated from the order transaction in EUR.
+
+      - name: promotional_discount_eur
+        description: Promotional discount applied to the order transaction in EUR.
+
+      - name: shrinkage_writeoff_eur
+        description: Shrinkage write-off amount for the order transaction in EUR.
+
+      - name: net_revenue_eur
+        description: Net revenue generated from the order transaction in EUR
+      
+      - name: manufacturing_cost_eur
+        description: Manufacturing cost of the product associated with the order
+          transaction in EUR.
+
+  # mart_daily_sku_profitability
+  - name: mart_daily_sku_profitability
+    description: Mart model for daily SKU profitability, combining data from
+      fact_omnichannel_sales, fact_inventory_rfid_scans, and dim_customers to
+      provide insights into unit economics, stock velocity, and true margin
+      analysis across every product line and sales channel.
+
+    columns:
+      - name: transaction_timestamp
+        description: Timestamp of when the order transaction occurred.
+        data_tests:
+          - not_null
+
+      - name: sku_id
+        description: Unique identifier for the product associated with the order.
+
+      - name: category
+        description: Category of the product associated with the order.
+
+      - name: sales_channel
+        description: Channel through which the order was placed.
+
+      - name: product_name
+        description: Name of the product associated with the order.
+
+      - name: customer_tier
+        description: Tier of the customer who placed the order.
+
+      - name: total_units_sold
+        description: Total number of units sold for the SKU on that day.
+
+      - name: total_net_revenue_eur
+        description: Total net revenue generated from the SKU on that day in EUR.
+
+      - name: total_manufacturing_cost_eur
+        description: Total manufacturing cost of the SKU sold on that day in EUR.
+
+      - name: net_profit_margin_percentage
+        description: Net profit margin percentage for the SKU on that day,
+          calculated as ((total_net_revenue_eur - total_manufacturing_cost_eur)
+          / total_net_revenue_eur) * 100.
+          

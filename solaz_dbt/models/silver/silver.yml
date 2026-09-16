@@ -1,0 +1,315 @@
+version: 2
+# There are 5 models gotten from 3 sources (PostgreSQL, Google Sheets, and S3) and 5 bronze tables
+
+# dim_customers table from postgres has a corresponding staging model stg_postgres__dim_customers
+# dim_products table from postgres has a corresponding staging model stg_postgres__dim_products
+# app_orders table from postgres has a corresponding staging model stg_postgres__app_orders
+# orders table from google_sheets has a corresponding staging model stg_gsheets__orders
+# rfid_scans table from s3 has a corresponding staging model stg_s3__rfid_scans
+
+
+models:
+  # from dim_customers table in bronze schema
+
+  - name: stg_postgres__dim_customers
+    description: Staging model for the dim_customers table from the PostgreSQL source.
+
+    columns:
+      - name: customer_id
+        description: Unique identifier for the customer.
+        data_tests:
+          - unique
+          - not_null
+
+      - name: registration_timestamp
+        description: Timestamp of when the customer registered.
+        data_tests:
+          - not_null
+
+      - name: registration_date
+        description: Date of customer registration, derived from the registration_timestamp.
+
+      - name: registration_time
+        description: Time of customer registration, derived from the registration_timestamp.
+
+      - name: customer_tier
+        description: Tier the customer belongs to
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: 
+                  - B2B Wholesale Boutique
+                  - D2C Retail
+
+      - name: country_code
+        description: Country code of the customer.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: 
+                  - ES
+                  - FR
+                  - IT
+      
+      - name: preferred_language
+        description: Preferred language of the customer.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: 
+                  - es
+
+      - name: is_active
+        description: Indicates if the customer is active. Boolean value.
+        data_tests:
+          - not_null
+
+      - name: loaded_at
+        description: Timestamp of when the customer data was loaded.
+        data_tests:
+          - not_null
+
+
+  # from dim_products table in bronze schema
+  - name: stg_postgres__dim_products
+    description: Staging model for the dim_products table from the PostgreSQL source.
+
+    columns:
+      - name: sku_id
+        description: Unique identifier for the product.
+        data_tests:
+          - unique
+          - not_null
+
+      - name: product_name
+        description: Name of the product.
+        data_tests:
+          - not_null
+
+      - name: category
+        description: Category to which the product belongs.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: 
+                  - Outerwear
+                  - Activewear
+                  - Footwear
+                  - Accessories
+
+      - name: upcycled_material_type
+        description: Type of upcycled material used in the product.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: 
+                  - Regenerated Nylon
+                  - Upcycled Marine Plastic
+                  - Recycled Rubber
+                  - Organic Mediterranean Cotton
+
+      - name: manufacturing_cost_eur
+        description: Manufacturing cost of the product in EUR.
+        data_tests:
+          - not_null
+
+      - name: retail_msrp_eur
+        description: Retail MSRP of the product in EUR.
+        data_tests:
+          - not_null
+
+      - name: loaded_at
+        description: Timestamp of when the product data was loaded.
+        data_tests:
+          - not_null
+
+
+  # from app_orders table in bronze schema
+  - name: stg_postgres__app_orders
+    description: Staging model for the app_orders table from the PostgreSQL source.
+
+    columns:
+      - name: transaction_id
+        description: Unique identifier for the order.
+        data_tests:
+          - unique
+          - not_null
+
+      - name: sku_id
+        description: Unique identifier for the product ordered.
+        data_tests:
+          - not_null
+
+      - name: customer_id
+        description: Unique identifier for the customer who placed the order.
+        data_tests:
+          - not_null
+
+      - name: transaction_timestamp
+        description: Timestamp of when the order was placed.
+        data_tests:
+          - not_null
+
+      - name: transaction_date
+        description: Date of the order, derived from the transaction_timestamp.
+
+      - name: transaction_time
+        description: Time of the order, derived from the transaction_timestamp.
+
+      - name: sales_channel
+        description: Sales channel through which the order was placed.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: 
+                  - postgres_ecommerce_app
+
+      - name: units_sold
+        description: Number of units sold in the order.
+
+      - name: gross_revenue_eur
+        description: Gross revenues from the order in EUR.
+
+      - name: promotional_discount_eur
+        description: Promotional discount applied to the order in EUR.
+
+      - name: shrinkage_discount_eur
+        description: Shrinkage discount applied to the order in EUR.
+
+      - name: net_revenue_eur
+        description: Net revenues from the order in EUR.
+
+      - name: loaded_at
+        description: Timestamp of when the order data was loaded.
+        data_tests:
+          - not_null
+
+
+  # from orders table in bronze schema
+  - name: stg_gsheets__orders
+    description: Staging model for the orders table from the Google Sheets source.
+
+    columns:
+      - name: transaction_id
+        description: Unique identifier for the order.
+        data_tests:
+          - unique
+          - not_null
+
+      - name: sku_id
+        description: Unique identifier for the product ordered.
+        data_tests:
+          - not_null
+
+      - name: customer_id
+        description: Unique identifier for the customer who placed the order.
+        data_tests:
+          - not_null
+
+      - name: transaction_timestamp
+        description: Timestamp of when the order was placed.
+        data_tests:
+          - not_null
+
+      - name: transaction_date
+        description: Date of the order, derived from the transaction_timestamp.
+
+      - name: transaction_time
+        description: Time of the order, derived from the transaction_timestamp.
+
+      - name: sales_channel
+        description: Sales channel through which the order was placed.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: 
+                  - google_sheets_wholesale_pos
+
+      - name: units_sold
+        description: Number of units sold in the order.
+
+      - name: gross_revenue_eur
+        description: Gross revenues from the order in EUR.
+
+      - name: promotional_discount_eur
+        description: Promotional discount applied to the order in EUR.
+
+      - name: shrinkage_discount_eur
+        description: Shrinkage discount applied to the order in EUR.
+
+      - name: net_revenue_eur
+        description: Net revenues from the order in EUR.
+
+      - name: notes
+        description: Additional notes or comments related to the order.
+
+      - name: loaded_at
+        description: Timestamp of when the order data was loaded.
+        data_tests:
+          - not_null
+
+
+  # from rfid_scans table in bronze schema
+  - name: stg_s3__rfid_scans
+    description: Staging model for the telemetry table from the S3 source (storage integration).
+
+    columns:
+      - name: scan_id
+        description: Unique identifier for the scan.
+        data_tests:
+          - unique
+          - not_null
+
+      - name: sku_id
+        description: Unique identifier for the product scanned.
+        data_tests:
+          - not_null
+
+      - name: facility_id
+        description: Unique identifier for the facility where the scan occurred.
+        data_tests:
+          - not_null
+
+      - name: scan_timestamp
+        description: Timestamp of when the scan was performed.
+        data_tests:
+          - not_null
+
+      - name: scan_type
+        description: Type of scan performed.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: 
+                  - Shelf Placement
+                  - Warehouse Check-In
+                  - Point-of-Sale Checkout
+                  - Boutique Transfer
+
+      - name: rfid_tag_status
+        description: Status of the RFID tag during the scan.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: 
+                  - Active
+                  - Damaged/Shrinkage
+                  - Sold
+
+      - name: year
+        description: Year of the scan.
+
+      - name: month
+        description: Month of the scan.
+
+      - name: day
+        description: Day of the scan.
