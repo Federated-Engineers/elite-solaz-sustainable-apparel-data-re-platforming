@@ -2,6 +2,8 @@
 
 A data platform modernization project for Solaz, focused on consolidating apparel, sales, and inventory signals into a Snowflake-based analytics environment. The repository combines infrastructure-as-code, dbt transformations, and deployment automation to support a medallion-style data model for omnichannel reporting.
 
+![Architecture Diagram](images/architecture.png)
+
 ## Overview
 
 This project brings together data from multiple operational systems and formats, including:
